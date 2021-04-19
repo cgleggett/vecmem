@@ -24,8 +24,8 @@ namespace {
 
       // Decide how many bytes to allocate.
       const std::size_t byteSize =
-         ( ( capacity == size ) ? ( size * sizeof( TYPE ) ) :
-           ( sizeof( std::size_t ) + size * sizeof( TYPE ) ) );
+         ( ( capacity == size ) ? ( capacity * sizeof( TYPE ) ) :
+           ( sizeof( std::size_t ) + capacity * sizeof( TYPE ) ) );
 
       // Return the appropriate smart pointer.
       return { capacity == 0 ? nullptr :
@@ -58,6 +58,7 @@ namespace vecmem { namespace data {
          } else {
             base_type::m_size =
                reinterpret_cast< size_pointer >( m_memory.get() );
+            *( base_type::m_size ) = size;
             base_type::m_ptr =
                reinterpret_cast< pointer >( m_memory.get() +
                                             sizeof( size_type ) );
